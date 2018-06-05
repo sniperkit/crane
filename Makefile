@@ -72,6 +72,8 @@ VCS_GIT_VERSION ?= $(VERSION)
 
 print-%: ; @echo $*=$($*)
 
+all: build install build-dist ## build and install crane package locally, then, build all dist versions
+
 test: ## run all unit tests in this package
 	@(go list ./... | grep -v "vendor/" | xargs -n1 go test -v -cover)
 
@@ -79,21 +81,27 @@ fmt: ## format source code with gofmt
 	@(gofmt -w crane)
 
 
-local: build-$(PLATFORM) ## build local executable of the default crane cli version
+build: build-$(PLATFORM) ## build local executable of the default crane cli version
 
 # default: build-$(PLATFORM)
 
-build: build-linux build-darwin build-darwin-pro build-windows build-windows-pro
+
+build-dist: build-linux build-darwin build-darwin-pro build-windows build-windows-pro ## build crane for all platforms
+install: install-$(PLATFORM) ## install crane for your local platform
 
 build-linux: ## build crane for linux (64bits)
 	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(BIN_DIR)/crane -v github.com/sniperkit/crane/cmd/crane
 	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_linux_amd64 -v github.com/sniperkit/crane/cmd/crane
+
+install-linux:
 	@go install github.com/sniperkit/crane/cmd/crane
 	@crane version
 
 build-darwin: ## build crane for MacOSX (64bits)
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o $(BIN_DIR)/crane -v github.com/sniperkit/crane/cmd/crane
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_linux_amd64 -v github.com/sniperkit/crane/cmd/crane
+
+install-darwin: ## build crane for MacOSX (64bits)
 	@go install github.com/sniperkit/crane/cmd/crane
 	@crane version
 
