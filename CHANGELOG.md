@@ -231,7 +231,7 @@ Behaviour changes:
 ## 2.10.0 (2016-10-08)
 
 * Optional Unison sync for Docker for Mac to improve performance.
-  For more information, see [Docker for Mac with Unison sync](https://github.com/michaelsauter/crane#docker-for-mac-with-unison-sync).
+  For more information, see [Docker for Mac with Unison sync](https://github.com/sniperkit/crane#docker-for-mac-with-unison-sync).
 
   _@michaelsauter_
 
@@ -698,4 +698,4 @@ Required Docker version: >= 1.3
 
 ## pre 1.0
 
-Please see the [releases](https://github.com/michaelsauter/crane/releases).
+Please see the [releases](https://github.com/sniperkit/crane/releases).

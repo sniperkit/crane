@@ -29,7 +29,7 @@ Please see [www.craneup.tech](https://www.craneup.tech?utm_source=github&utm_med
 ## Installation
 
 The latest release is 3.4.1 and requires Docker >= 1.13.
-Please have a look at the [changelog](https://github.com/michaelsauter/crane/blob/master/CHANGELOG.md) when upgrading.
+Please have a look at the [changelog](https://github.com/sniperkit/crane/blob/master/CHANGELOG.md) when upgrading.
 
 The free version can be installed via:
 
@@ -47,5 +47,5 @@ Copyright © 2013-2017 Michael Sauter. See the LICENSE file for details.
 
 ---
 
-[![GoDoc](https://godoc.org/github.com/michaelsauter/crane?status.png)](https://godoc.org/github.com/michaelsauter/crane)
+[![GoDoc](https://godoc.org/github.com/sniperkit/crane?status.png)](https://godoc.org/github.com/sniperkit/crane)
 [![Build Status](https://travis-ci.org/michaelsauter/crane.svg?branch=master)](https://travis-ci.org/michaelsauter/crane)
