@@ -17,14 +17,21 @@ ARG REPO_NAMESPACE=${REPO_NAMESPACE:-"sniperkit"}
 ARG REPO_PROJECT=${REPO_PROJECT:-"crane"}
 ARG REPO_URI=${REPO_URI:-"${REPO_VCS}/${REPO_NAMESPACE}/${REPO_PROJECT}"}
 
-## add apk build dependencies
-# RUN apk --no-cache --no-progress add gcc g++ make ca-certificates openssl git cmake make nano bash
+ARG GOLANG_TOOLS_URIS=${GOLANG_TOOLS_URIS:-"github.com/mitchellh/gox \
+                                            github.com/Masterminds/glide \
+                                            github.com/golang/dep/cmd/dep \
+                                            github.com/mattn/gom"}
 
 WORKDIR /go/src/${REPO_URI}
 
-## deps
+## copy deps definitions
 COPY Gopkg.lock Gopkg.toml ./
-COPY vendor vendor
+# COPY glide.lock glide.yaml ./
+
+## install deps
+# RUN clear && glide update --strip-vendor
+# RUN clear && dep ensure -v
+# COPY vendor vendor
 
 ## code
 COPY pkg pkg
@@ -36,8 +43,22 @@ COPY cmd/crane cmd/crane
 # COPY cmd/${REPO_PROJECT}-plus ${REPO_PROJECT}-plus
 
 ## install commands
-RUN go install ./... \
-    && ls -la /go/bin
+RUN for gtu in ${GOLANG_TOOLS_URIS}; do echo "[in progress]... go get -u $gtu" ; go get -u $gtu ; go install $gtu ; done \
+    \
+    && \
+    if [ -f "glide.lock" ]; then \
+        glide update --strip-vendor; \
+    \
+    elif [ -f "Gopkg.lock" ]; then \
+        dep ensure -v; \
+    fi \
+    \
+    && go install ./... \
+    \
+    && rm -fR $GOPATH/src \
+    && rm -fR $GOPATH/pkg \
+    \
+    && ls -l $GOPATH/bin
 
 ############################################################################################################
 ############################################################################################################
