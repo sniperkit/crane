@@ -1,0 +1,59 @@
+version: '2.1'
+
+services:
+
+  # Run the release process.
+  goreleaser:
+    extends: base
+    environment:
+      - GOPATH=/go
+      - GITHUB_TOKEN
+    entrypoint: [ "goreleaser" ]
+
+  # Lint the codebase
+  lint:
+    extends: base
+    entrypoint: [ "gometalinter", "--vendor", "--config=gometalinter.json", "--deadline=60s"]
+    command: "./..."
+
+  # Build rig, dropping off a working binary in build/darwin/rig.
+  compile:
+    extends: base
+    command: go build -o build/${GOOS:-darwin}/rig cmd/main.go
+    environment:
+      GOOS: ${GOOS:-darwin}
+      GOARCH: ${GOARCH:-amd64}
+      CGO_ENABLED: 0
+
+  # Install project dependencies.
+  install:
+    extends: base
+    entrypoint: [ "dep", "ensure" ]
+    command: ""
+
+  # Update project dependencies.
+  # Will update all if no arguments are provided. To update a particular package use:
+  #       docker-compose run --rm update [PACKAGENAME]
+  update:
+    extends: base
+    entrypoint: [ "dep", "ensure", "-update" ]
+    command: ""
+
+  # Foundational service to run commands within the container.
+  base:
+    build: .
+    command: /usr/bin/env sh
+    network_mode: bridge
+    environment:
+      # /go is the default GOPATH in the Docker image.
+      GOPATH: ${OUTRIGGER_GOPATH:-/go}
+    volumes:
+      # rig dependencies are not in a tidy sub-directory, so all global golang
+      # packages are found in the same directory. This volume mount persists
+      # them in general as a sort of cache.
+      #
+      # This does not address version mismatches between packages, so is a
+      # temporary/brittle workaround.
+      - /data/golang/cache:${OUTRIGGER_GOPATH:-/go}/src
+      - .:${OUTRIGGER_GOPATH:-/go}/src/github.com/phase2/rig
+    working_dir: ${OUTRIGGER_GOPATH:-/go}/src/github.com/phase2/rig
