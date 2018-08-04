@@ -85,7 +85,6 @@ build: build-$(PLATFORM) ## build local executable of the default crane cli vers
 
 # default: build-$(PLATFORM)
 
-
 build-dist: build-linux build-darwin build-darwin-pro build-windows build-windows-pro ## build crane for all platforms
 install: install-$(PLATFORM) ## install crane for your local platform
 

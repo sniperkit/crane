@@ -1,0 +1,111 @@
+{{ range .Containers }}{{ .Name }}:
+  image: {{ .Image }}{{ if .BuildParams.Context }}
+  build: {{ .BuildParams.Context }}{{ end }}{{ if .BuildParams.File }}
+    dockerfile: {{ .BuildParams.File }}{{ end }}{{ if .CapAdd }}
+  cap-add:{{ range .CapAdd }}
+  - {{ . }}{{ end }}{{ end }}{{ if .CapDrop }}
+  cap-drop:{{ range .CapDrop }}
+  - {{ . }}{{ end }}{{ end }}{{ if .BlkioWeightDevice }}
+  blkio-weight-device:{{ range .BlkioWeightDevice }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Cmd }}
+  cmd:{{ range .Cmd }} {{ . }}{{ end }}{{ end }}{{ if .CgroupParent }}
+  cgroup-parent: {{ .CgroupParent }}{{ end }}{{ if .Device }}
+  devices:{{ range .Device }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DNS }}
+  dns:{{ range .DNS }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DNSSearch }}
+  dns-search:{{ range .DNSSearch }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DNSOpt }}
+  dns-opt:{{ range .DNSOpt }}
+  - {{ . }}{{ end }}{{ end }}{{ if .EnvFile }}
+  env-file:{{ range .EnvFile }}
+  - {{ . }}{{ end }}{{ end }}{{ if .LxcConf }}
+  lxc-conf:{{ range .LxcConf }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Env }}
+  env:{{ range .Env }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Expose }}
+  expose:{{ range .Expose }}
+  - {{ . }}{{ end }}{{ end }}{{ if .AddHost }}
+  add-host:{{ range .AddHost }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Label }}
+  label:{{ range .Label }}
+  - {{ . }}{{ end }}{{ end }}{{ if .LabelFile }}
+  label-file:{{ range .LabelFile }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Link }}
+  link:{{ range .Link }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Ip }}
+  ip: {{ .Ip }}{{ end }}{{ if .Ip6 }}
+  ip6: {{ .Ip6 }}{{ end }}{{ if .IPC }}
+  ipc: {{ .IPC }}{{ end }}{{ if .Isolation }}
+  isolation: {{ .Isolation }}{{ end }}{{ if .LogDriver }}
+  log-driver: {{ .LogDriver }}{{ end }}{{ if .LogOpt }}
+  log-opt:{{ range .LogOpt }}
+  - {{ . }}{{ end }}{{ end }}{{ if ne .Net "bridge" }}
+  net: {{ .Net }}{{ end }}{{ if .BlkioWeight }}
+  blkio-weight: {{ .BlkioWeight }}{{ end }}{{ if .Pid }}
+  pid: {{ .Pid }}{{ end }}{{ if .Detach }}
+  detach: {{ .Detach }}{{ end }}{{ if .DetachKeys }}
+  detach-keys: {{ .DetachKeys }}{{ end }}{{ if .KernelMemory }}
+  kernel-memory: {{ .KernelMemory }}{{ end }}{{ if .Publish }}
+  publish:{{ range .Publish }}
+  - {{ . }}{{ end }}{{ end }}{{ if .SecurityOpt }}
+  security-opt:{{ range .SecuirtyOpt }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Volume }}
+  volume:{{ range .Volume }}
+  - {{ . }}{{ end }}{{ end }}{{ if .VolumesFrom }}
+  volumes-from:{{ range .VolumesFrom }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Requires }}
+	requires:{{ range .Requires }}
+  - {{ . }}{{ end }}{{ end }}{{ if .CPUShares }}
+  cpu-shared: {{ .CPUShares }}{{ end }}{{ if .CPUPeriod }}
+  cpu-period: {{ .CPUPeriod }}{{ end }}{{ if .CPUQuota }}
+  cpu-quota: {{ .CPUQuota }}{{ end }}{{ if .Cidfile }}
+  cidfile: {{ .Cidfile }}{{ end }}{{ if .OomKillDisable }}
+  oom-kill-disable: {{ .OomKillDisable }}{{ end }}{{ if .OomScoreAdj }}
+  oom-score-adj: {{ .OomScoreAdj }}{{ end }}{{ if .ReadOnly }}
+  read-only: {{ .ReadOnly }}{{ end }}{{ if .PublishAll }}
+  publish-all: {{ .PublishAll }}{{ end }}{{ if .RawRm }}
+  rm: {{ .RawRm }}{{ end }}{{ if .SigProxy }}
+  sig-proxy: {{ .SigProxy }}{{ end }}{{ if .StopSignal }}
+  stop-signal: {{ .StopSignal.Value }}{{ end }}{{ if .Tmpfs }}
+  tmpfs: {{ range .Tmpfs }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Ulimit }}
+  ulimit: {{ range .Ulimit }}
+  - {{ . }}{{ end }}{{ end }}{{ if .ShmSize }}
+  shm-size: {{ .ShmSize }}{{ end }}{{ if .CPUset }}
+  cpuset: {{ .CPUset }}{{ end }}{{ if .Entrypoint }}
+  entrypoint: {{ .Entrypoint }}{{ end }}{{ if .User }}
+  user: {{ .User }}{{ end }}{{ if .Uts }}
+  uts: {{ .Uts }}{{ end }}{{ if .Workdir }}
+  workdir: {{ .Workdir }}{{ end }}{{ if .HealthCmd }}
+  health-cmd: {{ .HealthCmd }}{{ end }}{{ if .HealthInterval }}
+  health-interval: {{ .HealthInterval }}{{ end }}{{ if .HealthRetries }}
+  health-retries: {{ .HealthRetries }}{{ end }}{{ if .HealthTimeout }}
+  health-timeouts: {{ .HealthTimeout }}{{ end }}{{ if .Hostname }}
+  hostname: {{ .Hostname }}{{ end }}{{ if .MacAddress }}
+  mac-address: {{ .MacAddress }}{{ end }}{{ if .Memory }}
+  memory-limit: {{ .Memory }}{{ end }}{{ if .MemorySwap }}
+  memswap-limit: {{ .MemorySwap }}{{ end }}{{ if .Privileged }}
+  privileged: {{ .Privileged }}{{ end }}{{ if .Restart }}
+  restart: {{ .Restart }}{{ end }}{{ if .ReadOnly }}
+  read_only: {{ .ReadOnly }}{{ end }}{{ if .Init }}
+  init: {{ .Init }}{{ end }}{{ if .Interactive }}
+  interactive: {{ .Interactive }}{{ end }}{{ if .Net }}
+  net: {{ .Net }}{{ end }}{{ if .VolumeDriver }}
+  volume-driver: {{ .VolumeDriver }}{{ end }}{{ if .Tty }}
+  tty: {{ .Tty }}{{ end }}{{ if .GroupAdd }}
+  group-add:{{ range .GroupAdd }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DeviceReadBps }}
+  device-read-bps:{{ range .DeviceReadBps }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DeviceReadIops }}
+  device-read-iops:{{ range .DeviceReadIops }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DeviceWriteBps }}
+  device-write-bp:{{ range .DeviceWriteBps }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DeviceWriteIops }}
+  device-write-iops:{{ range .DeviceWriteIops }}
+  - {{ . }}{{ end }}{{ end }}{{ if .DeviceWriteIops }}
+  device-write-iops:{{ range .DeviceWriteIops }}
+  - {{ . }}{{ end }}{{ end }}{{ if .Networks }}
+  networks:{{ range .Networks }}
+  - {{ . }}{{ end }}{{ end }}
+{{ end }}
