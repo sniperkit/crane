@@ -1,0 +1,7 @@
+[Unit]
+Wants=multi-user.target
+After=multi-user.target
+
+[Service]
+ExecStart=/centos-mounted-volume-plugin
+EnvironmentFile=/pluginenv
