@@ -69,8 +69,12 @@ VERSION_INCHANGELOG = $(shell perl -ne '/^\# Release (\d+(\.\d+)+) / && print "$
 VCS_GIT_REMOTE_URL = $(shell git config --get remote.origin.url)
 VCS_GIT_VERSION ?= $(VERSION)
 
-# docker build -t sniperkit/crane:go1.10.3-alpine3.7-dist --no-cache .
-# docker build -t sniperkit/crane:go1.10.3-alpine3.7-console --no-cache -f Dockerfile.console .
+# docker commands:
+# - docker build -t sniperkit/crane:go1.10.3-alpine3.7-dev --no-cache .
+# - docker build -t sniperkit/crane:go1.10.3-alpine3.7-console -f Dockerfile.console .
+# - docker build -t sniperkit/crane:go1.10.3-alpine3.7-prod --target=runner .
+# - docker build -t sniperkit/crane:go1.10.3-alpine3.7-dist --target=xcross .
+# - docker build -t sniperkit/crane:go1.10.3-debian-wheezy-dist -f Dockerfile.xcross .
 
 .PHONY: print-% fmt default
 print-%: ; @echo $*=$($*)
