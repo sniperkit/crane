@@ -1,0 +1,6 @@
+digraph {
+{{ range $container := .Containers }}  "{{ .Name }}" [style=bold]
+{{ range .Dependencies.Link }}  "{{ $container.Name }}"->"{{ . }}"
+{{ end }}{{ range .Dependencies.VolumesFrom }}  "{{ $container.Name }}"->"{{ . }}" [style=dashed]
+{{ end }}{{ if .Dependencies.Net }}  "{{ $container.Name }}"->"{{ . }}" [style=dotted]
+{{ end }}{{ end }}}
