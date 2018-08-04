@@ -1,4 +1,4 @@
-FROM       alpine:3.6
+FROM       alpine:3.8
 MAINTAINER Michael Sauter <mail@michaelsauter.net>
 
 ARG UNISON_VERSION=2.48.4
