@@ -98,9 +98,6 @@ docker-all: docker-console docker-xcross
 docker-runner:
 	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-prod --target=runner .
 
-docker-runner:
-	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-prod --target=runner .
-
 docker-console:
 	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-console -f Dockerfile.console .
 

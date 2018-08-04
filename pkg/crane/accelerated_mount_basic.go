@@ -1,10 +1,13 @@
-// +build !pro
+// +build basic
 
 package crane
 
 import (
 	"runtime"
 )
+
+// refs
+// - https://github.com/phase2/rig/blob/develop/commands/project_sync.go
 
 type AcceleratedMount interface {
 	Run()
