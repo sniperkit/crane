@@ -16,7 +16,6 @@ else
   PLATFORM := linux
 endif
 
-
 PLATFORM_VERSION ?= $(shell uname -r)
 PLATFORM_ARCH ?= $(shell uname -m)
 PLATFORM_INFO ?= $(shell uname -a)
@@ -95,7 +94,7 @@ build-dist: build-linux build-darwin build-darwin-pro build-windows build-window
 install: install-$(PLATFORM) ## install crane for your local platform
 
 run-linux: ## run crane for linux (64bits)
-	@GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go run ./cmd/crane/*.go
 
 build-linux: ## build crane for linux (64bits)
 	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(BIN_DIR)/crane -v github.com/sniperkit/crane/cmd/crane
@@ -110,7 +109,7 @@ build-darwin: ## build crane for MacOSX (64bits)
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_linux_amd64 -v github.com/sniperkit/crane/cmd/crane
 
 run-darwin: ## run crane for MacOSX (64bits)
-	@GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
 
 install-darwin: ## install crane for MacOSX (64bits)
 	@go install github.com/sniperkit/crane/cmd/crane
@@ -120,21 +119,23 @@ build-darwin-pro: ## build crane pro for MacOSX (64bits)
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -tags pro -o $(DIST_DIR)/crane_darwin_amd64_pro -v github.com/sniperkit/crane/cmd/crane
 
 run-darwin-pro: ## build crane pro for MacOSX (64bits)
-	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go run ./cmd/crane/*.go
 
 build-windows: ## build crane for Windows (64bits)
 	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_windows_amd64.exe -v github.com/sniperkit/crane/cmd/crane
 
 run-windows: ## run crane for Windows (64bits)
-	@GOOS=windows GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go run ./cmd/crane/*.go
 
 build-windows-pro: ## build crane pro for Windows (64bits)
 	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -tags pro -o $(DIST_DIR)/crane_windows_amd64_pro.exe -v github.com/sniperkit/crane/cmd/crane
 
 run-windows-pro: ## run crane pro for Windows (64bits)
-	@GOOS=windows GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go run ./cmd/crane/*.go
 
 .PHONY: help
 help: ## display available makefile targets for this project
 	@echo "\033[36mMAKEFILE TARGETS:\033[0m"
+	@echo "- PLATFORM: $(PLATFORM)"
+	@echo "- PWD: $(PWD)"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "- \033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)

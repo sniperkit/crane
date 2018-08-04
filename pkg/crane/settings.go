@@ -7,13 +7,14 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"runtime"
 	"time"
 
 	// external
 	"github.com/cep21/xdgbasedir"
-	"github.com/go-yaml/yaml"
+	// "github.com/go-yaml/yaml"
 	uuid "github.com/hashicorp/go-uuid"
 	"github.com/jinzhu/configor"
 	"github.com/k0kubun/pp"
