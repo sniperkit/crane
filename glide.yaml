@@ -2,12 +2,15 @@ package: github.com/sniperkit/crane
 import:
 - package: github.com/alecthomas/kingpin
 - package: github.com/bjaglin/multiplexio
+- package: github.com/cep21/xdgbasedir
 - package: github.com/fatih/color
 - package: github.com/flynn/go-shlex
 - package: github.com/go-yaml/yaml
 - package: github.com/hashicorp/go-uuid
 - package: github.com/hoisie/mustache
 - package: github.com/imdario/mergo
+- package: github.com/jinzhu/configor
+- package: github.com/k0kubun/pp
 testImport:
 - package: github.com/stretchr/testify
   subpackages:

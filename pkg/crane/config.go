@@ -16,15 +16,10 @@ import (
 	// external
 	"github.com/go-yaml/yaml"
 	"github.com/imdario/mergo"
-
 	// experimental
-	"github.com/cep21/xdgbasedir"
-	"github.com/jinzhu/configor"
 	// "github.com/k0kubun/pp"
 	// "github.com/ghodss/yaml"
 )
-
-var configDirectoryPath string
 
 type Config interface {
 	DependencyMap() map[string]*Dependencies
@@ -47,12 +42,10 @@ type Config interface {
 }
 
 type config struct {
-	// experimental
-	DatabasePath string                    `json:"database_path" yaml:"database_path"`
-	IndexPath    string                    `json:"index_path" yaml:"index_path"`
-	Services     map[string]*ServiceConfig `json:"services" yaml:"services"`
-	Outputs      map[string]*OutputConfig  `json:"outputs" yaml:"outputs"`
-	// common
+	// RawExtra ExtraConfig `json:"extra,omitempty" yaml:"extra,omitempty"`
+	Macros               map[string]*MacroConfig      `json:"macros,omitempty" yaml:"macros,omitempty"`
+	Pipelines            map[string]*PipelineConfig   `json:"pipelines,omitempty" yaml:"pipelines,omitempty"`
+	Plugins              map[string]*PluginConfig     `json:"plugins,omitempty" yaml:"plugins,omitempty"`
 	RawPrefix            interface{}                  `json:"prefix" yaml:"prefix"`
 	RawContainers        map[string]*container        `json:"services" yaml:"services"`
 	RawGroups            map[string][]string          `json:"groups" yaml:"groups"`

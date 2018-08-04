@@ -2,10 +2,11 @@ package crane
 
 // ServiceConfig contains configuration information for a service
 type ServiceConfig struct {
-	Token string
-	User  string
+	Login string `json:"login,omitempty" yaml:"login,omitempty"`
+	Token string `json:"token,omitempty" yaml:"token,omitempty"`
 }
 
+/*
 // GetService returns the configuration information for a service
 func (config *Config) GetService(name string) *ServiceConfig {
 	if config.Services == nil {
@@ -19,3 +20,4 @@ func (config *Config) GetService(name string) *ServiceConfig {
 	}
 	return service
 }
+*/

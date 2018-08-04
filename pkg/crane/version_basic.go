@@ -5,9 +5,16 @@ import (
 	"fmt"
 )
 
-const Version = "3.4.2"
-const Pro = false
+const (
+	ProgramName = `crane`
+	Version     = "3.4.2"
+	Pro         = false
+)
 
 func printVersion() {
 	fmt.Printf("v%s\n", Version)
+}
+
+func printVersionLong() {
+	fmt.Printf("%s v%s\n", ProgramName, Version)
 }

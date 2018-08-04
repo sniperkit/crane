@@ -70,8 +70,10 @@ VERSION_INCHANGELOG = $(shell perl -ne '/^\# Release (\d+(\.\d+)+) / && print "$
 VCS_GIT_REMOTE_URL = $(shell git config --get remote.origin.url)
 VCS_GIT_VERSION ?= $(VERSION)
 
+.PHONY: print-% fmt default
 print-%: ; @echo $*=$($*)
 
+.PHONY: all build install build-dist
 all: build install build-dist ## build and install crane package locally, then, build all dist versions
 
 test: ## run all unit tests in this package
@@ -80,13 +82,20 @@ test: ## run all unit tests in this package
 fmt: ## format source code with gofmt
 	@(gofmt -w crane)
 
-
 build: build-$(PLATFORM) ## build local executable of the default crane cli version
+default: build-$(PLATFORM)
 
-# default: build-$(PLATFORM)
+.PHONY: run run-linux run-darwin run-darwin-pro run-windows-pro run-windows-pro
+run: run-$(PLATFORM)
 
+.PHONY: build-linux build-darwin build-darwin-pro build-windows build-windows-pro
 build-dist: build-linux build-darwin build-darwin-pro build-windows build-windows-pro ## build crane for all platforms
+
+.PHONY: install-linux install-darwin
 install: install-$(PLATFORM) ## install crane for your local platform
+
+run-linux: ## run crane for linux (64bits)
+	@GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
 
 build-linux: ## build crane for linux (64bits)
 	@GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(BIN_DIR)/crane -v github.com/sniperkit/crane/cmd/crane
@@ -100,19 +109,32 @@ build-darwin: ## build crane for MacOSX (64bits)
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o $(BIN_DIR)/crane -v github.com/sniperkit/crane/cmd/crane
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_linux_amd64 -v github.com/sniperkit/crane/cmd/crane
 
-install-darwin: ## build crane for MacOSX (64bits)
+run-darwin: ## run crane for MacOSX (64bits)
+	@GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+
+install-darwin: ## install crane for MacOSX (64bits)
 	@go install github.com/sniperkit/crane/cmd/crane
 	@crane version
 
 build-darwin-pro: ## build crane pro for MacOSX (64bits)
 	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -tags pro -o $(DIST_DIR)/crane_darwin_amd64_pro -v github.com/sniperkit/crane/cmd/crane
 
+run-darwin-pro: ## build crane pro for MacOSX (64bits)
+	@GOOS=darwin GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+
 build-windows: ## build crane for Windows (64bits)
 	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -o $(DIST_DIR)/crane_windows_amd64.exe -v github.com/sniperkit/crane/cmd/crane
+
+run-windows: ## run crane for Windows (64bits)
+	@GOOS=windows GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
 
 build-windows-pro: ## build crane pro for Windows (64bits)
 	@GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -tags pro -o $(DIST_DIR)/crane_windows_amd64_pro.exe -v github.com/sniperkit/crane/cmd/crane
 
+run-windows-pro: ## run crane pro for Windows (64bits)
+	@GOOS=windows GOARCH=amd64 CGO_ENABLED=1 go run -race ./cmd/crane/*.go
+
+.PHONY: help
 help: ## display available makefile targets for this project
 	@echo "\033[36mMAKEFILE TARGETS:\033[0m"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "- \033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)

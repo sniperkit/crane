@@ -5,23 +5,45 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"time"
 
+	// external
+	"github.com/cep21/xdgbasedir"
+	"github.com/go-yaml/yaml"
 	uuid "github.com/hashicorp/go-uuid"
+	"github.com/jinzhu/configor"
+	"github.com/k0kubun/pp"
 )
 
-var settings *Settings
+var (
+	settings              *Settings
+	settingsDirectoryPath string
+)
 
 type Settings struct {
-	filename        string
-	UUID            string    `json:"uuid"`
-	Version         string    `json:"version"`
-	LatestVersion   string    `json:"latest_version"`
-	NextUpdateCheck time.Time `json:"next_update_check"`
-	CheckForUpdates bool      `json:"check_for_updates"`
+	filename        string                    `json:"-" yaml:"-"`
+	UUID            string                    `json:"uuid" yaml:"uuid"`
+	Version         string                    `json:"version" yaml:"version"`
+	LatestVersion   string                    `json:"latest_version" yaml:"latest_version"`
+	NextUpdateCheck time.Time                 `json:"next_update_check" yaml:"next_update_check"`
+	CheckForUpdates bool                      `json:"check_for_updates" yaml:"check_for_updates"`
+	DatabasePath    string                    `default:"~/.config/crane/data" json:"database_path,omitempty" yaml:"database_path,omitempty"`
+	IndexPath       string                    `default:"~/.config/crane/index" json:"index_path,omitempty" yaml:"index_path,omitempty"`
+	Services        map[string]*ServiceConfig `json:"services,omitempty" yaml:"services,omitempty"`
+	Outputs         map[string]*OutputConfig  `json:"outputs,omitempty" yaml:"outputs,omitempty"`
+}
+
+func init() {
+	baseDir, err := xdgbasedir.ConfigHomeDirectory()
+	if err != nil {
+		log.Fatal("Can't find XDG BaseDirectory")
+	} else {
+		settingsDirectoryPath = path.Join(baseDir, ProgramName)
+	}
 }
 
 // Determine crane settings base path.
@@ -64,6 +86,15 @@ func createSettings(filename string) error {
 	msg := fmt.Sprintf("Writing settings file to %s\n", filename)
 	printInfof(msg)
 	return settings.Write(filename)
+}
+
+func loadSettings(settingFiles ...string) {
+	if len(settingFiles) == 0 {
+		settingFiles = append(settingFiles, "config.yml")
+	}
+	var settings *Settings
+	configor.Load(settings, settingFiles...)
+	pp.Println("settings: %#v", settings)
 }
 
 func readSettings() error {
@@ -129,3 +160,22 @@ func (s *Settings) Write(filename string) error {
 	contents, _ := json.Marshal(s)
 	return ioutil.WriteFile(filename, contents, 0644)
 }
+
+/*
+func (s *Settings) WriteConfig() error {
+	err := os.MkdirAll(settingsDirectoryPath, 0700)
+	if err != nil {
+		return err
+	}
+
+	data, err := yaml.Marshal(s)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(settingsFilePath(), data, 0600)
+}
+
+func settingsFilePath() string {
+	return path.Join(settingsDirectoryPath, fmt.Sprintf("%s.settings.yml", ProgramName))
+}
+*/
