@@ -88,6 +88,41 @@ test: ## run all unit tests in this package
 fmt: ## format source code with gofmt
 	@(gofmt -w crane)
 
+.PHONY: docker docker-pull docker-push docker-xcross docker-console
+
+docker: docker-pull
+	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-dev .
+
+docker-all: docker-console docker-xcross
+
+docker-runner:
+	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-prod --target=runner .
+
+docker-runner:
+	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-prod --target=runner .
+
+docker-console:
+	@docker build -t sniperkit/crane:go1.10.3-alpine3.7-console -f Dockerfile.console .
+
+docker-xcross: docker
+	@docker build -t sniperkit/crane:go1.10.3-debian-wheezy-dist --target=xcross .
+	@docker run -ti --rm -e CGO_ENABLED=0 \
+	-v $(CURDIR):/gopath/src/github.com/sniperkit/crane \
+	-w /gopath/src/github.com/sniperkit/crane \
+	sniperkit/crane:go1.10.3-debian-wheezy-dist \
+	gox \
+	-osarch="darwin/amd64 darwin/386 linux/amd64 linux/386 windows/amd64 windows/386" \
+	-output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+
+docker-xcross-standalone:
+	@docker build -t sniperkit/crane:go1.10.3-debian-wheezy-standalone -f Dockerfile.xcross .
+
+docker-push:
+	@docker push sniperkit/crane:go1.10.3-debian-wheezy-dist
+	@docker push sniperkit/crane:go1.10.3-alpine3.7-dev
+
+
+# $(shell date -v-1d +%Y-%m-%d)
 build: build-$(PLATFORM) ## build local executable of the default crane cli version
 default: build-$(PLATFORM)
 

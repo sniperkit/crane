@@ -142,10 +142,17 @@ COPY pkg pkg
 COPY plugin plugin
 COPY cmd cmd
 
+# re-using above deps install, it will just export without fetching them
 RUN mkdir -p ${DIST_DIR} \
     && pwd \
     && ls -la \
-    && gox -os="linux windows darwin" -arch="amd64 386" -output="/dist/${REPO_PROJECT}_{{.OS}}_{{.Arch}}" cmd/... \
+    && if [ -f "glide.lock" ]; then \
+        glide update --strip-vendor; \
+    \
+    elif [ -f "Gopkg.lock" ]; then \
+        dep ensure -v; \
+    fi \
+    && gox -os="linux windows darwin" -arch="amd64 386" -output="/dist/${REPO_PROJECT}_{{.OS}}_{{.Arch}}" ./cmd/${REPO_PROJECT} \
     && ls -la /dist
 
 # VOLUME ["/dist"]
