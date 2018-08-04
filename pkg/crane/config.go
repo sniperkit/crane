@@ -13,9 +13,18 @@ import (
 	"strings"
 	"time"
 
+	// external
 	"github.com/go-yaml/yaml"
 	"github.com/imdario/mergo"
+
+	// experimental
+	"github.com/cep21/xdgbasedir"
+	"github.com/jinzhu/configor"
+	// "github.com/k0kubun/pp"
+	// "github.com/ghodss/yaml"
 )
+
+var configDirectoryPath string
 
 type Config interface {
 	DependencyMap() map[string]*Dependencies
@@ -38,6 +47,12 @@ type Config interface {
 }
 
 type config struct {
+	// experimental
+	DatabasePath string                    `json:"database_path" yaml:"database_path"`
+	IndexPath    string                    `json:"index_path" yaml:"index_path"`
+	Services     map[string]*ServiceConfig `json:"services" yaml:"services"`
+	Outputs      map[string]*OutputConfig  `json:"outputs" yaml:"outputs"`
+	// common
 	RawPrefix            interface{}                  `json:"prefix" yaml:"prefix"`
 	RawContainers        map[string]*container        `json:"services" yaml:"services"`
 	RawGroups            map[string][]string          `json:"groups" yaml:"groups"`
@@ -228,7 +243,7 @@ func (c *config) ContainerInfo(name string) ContainerInfo {
 
 func (c *config) NetworkNames() []string {
 	networks := []string{}
-	for name, _ := range c.networkMap {
+	for name := range c.networkMap {
 		networks = append(networks, name)
 	}
 	sort.Strings(networks)
@@ -237,7 +252,7 @@ func (c *config) NetworkNames() []string {
 
 func (c *config) VolumeNames() []string {
 	volumes := []string{}
-	for name, _ := range c.volumeMap {
+	for name := range c.volumeMap {
 		volumes = append(volumes, name)
 	}
 	sort.Strings(volumes)
@@ -250,7 +265,7 @@ func (c *config) Cmds() map[string][]string {
 
 func (c *config) AcceleratedMountNames() []string {
 	acceleratedMounts := []string{}
-	for name, _ := range c.acceleratedMountMap {
+	for name := range c.acceleratedMountMap {
 		acceleratedMounts = append(acceleratedMounts, name)
 	}
 	sort.Strings(acceleratedMounts)

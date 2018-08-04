@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 3.4.2 (2018-07-09)
+
+* [Enhancement] Support `volumes_from` config of docker-compose (`volumes-from` was already supported).
+
 * [Enhancement] Add `--config`, `-tag` and `--prefix` flags to shortcut command if those flags are specified for the original Crane command as well.
 
 ## 3.4.1 (2018-04-04)

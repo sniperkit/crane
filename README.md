@@ -28,13 +28,18 @@ Please see [www.craneup.tech](https://www.craneup.tech?utm_source=github&utm_med
 
 ## Installation
 
+<<<<<<< HEAD
 The latest release is 3.4.1 and requires Docker >= 1.13.
 Please have a look at the [changelog](https://github.com/sniperkit/crane/blob/master/CHANGELOG.md) when upgrading.
+=======
+The latest release is 3.4.2 and requires Docker >= 1.13.
+Please have a look at the [changelog](https://github.com/michaelsauter/crane/blob/master/CHANGELOG.md) when upgrading.
+>>>>>>> 2a452231eff7a1b185e03a8b848399c52cee9fbd
 
 The free version can be installed via:
 
 ```
-bash -c "`curl -sL https://raw.githubusercontent.com/michaelsauter/crane/v3.4.1/download.sh`" && \
+bash -c "`curl -sL https://raw.githubusercontent.com/michaelsauter/crane/v3.4.2/download.sh`" && \
 mv crane /usr/local/bin/crane
 ```
 
