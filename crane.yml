@@ -1,13 +1,16 @@
 services:
+
   crane:
-    image: michaelsauter/golang:1.8
+    image: ${GOLANG_BASE_IMAGE}
     rm: true
     interactive: true
     tty: true
-    volume: ["$GOPATH:/go"]
+    volume:
+    - "$PWD:/go/src/github.com/sniperkit/crane"
+    # - "$GOPATH:/go"
     workdir: /go/src/github.com/sniperkit/crane
     share-ssh-socket: true
-    cmd: ["bash"]
+    cmd: ["/bin/sh"]
 
 commands:
   test: run crane make test
