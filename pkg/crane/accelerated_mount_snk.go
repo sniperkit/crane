@@ -216,6 +216,7 @@ func (a *acceleratedMount) image() string {
 	versionOut, err := commandOutput("unison", []string{"-version"})
 	if err != nil {
 		return "michaelsauter/unison:2.48.4"
+		// return "michaelsauter/crane-sync:latest" // 3.2.0
 	}
 	// `unison -version` returns sth like "unison version 2.48.4"
 	versionParts := strings.Split(versionOut, " ")
