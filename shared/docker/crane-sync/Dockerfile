@@ -6,7 +6,6 @@ ARG UNISON_VERSION=2.48.4
 # Install in one run so that build tools won't remain in any docker layers
 # Install build tools
 RUN apk add --update build-base curl && \
-    apk add --no-cache su-exec && \
     # Install ocaml & emacs from testing repositories
     apk add --update-cache --repository http://dl-4.alpinelinux.org/alpine/edge/testing/ ocaml emacs && \
     # Download & Install Unison
@@ -29,10 +28,7 @@ ENV TZ="Europe/Berlin" \
     UNISON_GID=0 \
     HOME="/root"
 
-ADD bin/start-unison /usr/local/bin/start-unison
-RUN chmod 0755 /usr/local/bin/start-unison
-ADD bin/unison-server /usr/local/bin/unison-server
-RUN chmod 0755 /usr/local/bin/unison-server
+ADD bin/sync /usr/local/bin/sync
+RUN chmod 0755 /usr/local/bin/sync
 
-EXPOSE 5000
-CMD ["start-unison"]
+ENTRYPOINT ["sync"]

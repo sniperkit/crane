@@ -13,6 +13,21 @@ import (
 	"time"
 )
 
+/*
+	Refs:
+	- http://markshust.com/2018/01/30/performance-tuning-docker-mac
+	- https://blog.docker.com/2016/06/docker-for-mac-splice/
+	- http://markshust.com/2017/03/02/making-docker-mac-faster-overlay2-filesystem
+		- docker info | grep "Storage Driver"
+		- {"storage-driver": "overlay2"}
+	- https://docs.docker.com/docker-for-mac/osxfs-caching/
+		- docker run -v /Users/yallop/project:/project:cached alpine command
+	- https://docs.docker.com/docker-for-mac/osxfs-caching/
+	- https://docs.docker.com/docker-for-mac/osxfs/#performance-issues-solutions-and-roadmap
+	- https://stories.amazee.io/docker-on-mac-performance-docker-machine-vs-docker-for-mac-4c64c0afdf99
+	- https://docs.docker.com/compose/compose-file/#caching-options-for-volume-mounts-docker-for-mac
+*/
+
 type AcceleratedMount interface {
 	ContainerName() string
 	Volume() string
@@ -125,9 +140,16 @@ func (a *acceleratedMount) Start(debug bool) {
 			"-e", "UNISON_DIR=" + a.containerDir(),
 			"-e", "UNISON_UID=" + strconv.Itoa(a.Uid),
 			"-e", "UNISON_GID=" + strconv.Itoa(a.Gid),
-			"-v", a.containerDir(),
+			"-v", a.containerDir() + ":cached",
 			a.image(),
 		}
+
+		/*
+			- mac, osxfs, volumes
+			- docker run -v /Users/yallop/project:/project:cached alpine command
+			- docker run -v /Users/yallop/project:/project:cached  -v /host/another-path:/mount/another-point:consistent alpine command
+		*/
+
 		executeHiddenCommand("docker", dockerArgs)
 		fmt.Printf("Doing initial snyc for %s ...\n", a.hostDir())
 		unisonArgs = a.unisonArgs()
