@@ -1,5 +1,5 @@
-hash: 7f8c45beb6df31e09711a8edafaddf81b48f510ba3f0d49da9b1cf184afcbc13
-updated: 2018-09-20T05:02:50.530209054+02:00
+hash: 4b5d4d07e2656feac35cdb9094a47922bad980e052be3985d001c2a3a07d7673
+updated: 2018-09-20T05:55:57.254693331+02:00
 imports:
 - name: github.com/alecthomas/kingpin
   version: a39589180ebd6bbf43076e514b55f20a95d43086
@@ -13,6 +13,8 @@ imports:
   version: 0c965951289cce37dec52ad1f34200fefc816777
 - name: github.com/bjaglin/multiplexio
   version: 7477705f395a7cc682ae2453b04377e9f4984779
+- name: github.com/BurntSushi/toml
+  version: 3012a1dbe2e4bd1391d42b32f0577cb7bbc7f005
 - name: github.com/codegangsta/cli
   version: 934abfb2f102315b5794e15ebc7949e4ca253920
 - name: github.com/docker/go-units
@@ -27,6 +29,10 @@ imports:
   version: 9f23e2d6bd2a77f959b2bf6acdbefd708a83a4a4
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/jinzhu/configor
+  version: 4edaf76fe18865e36de734d887f4c01bd05707af
+- name: github.com/k0kubun/pp
+  version: e057ee7a28277be4d2af303443b6da377768181f
 - name: github.com/kardianos/osext
   version: ae77be60afb1dcacde03767a8c37337fad28ac14
 - name: github.com/mattn/go-colorable
