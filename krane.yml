@@ -1,8 +1,7 @@
-# Sniperkit-Bot
-# - Status: analyzed
 ---
 services:
-  crane:
+
+  krane:
     image: golang:1-alpine3.8
     rm: true
     interactive: true
@@ -13,13 +12,13 @@ services:
     cmd: ["sh"]
 
 commands:
-  test: run crane make test
-  build: run crane make build
-  build-darwin: run crane make build-darwin
-  build-darwin-pro: run crane make build-darwin-pro
-  gofmt: run crane gofmt -w crane
+  test: run krane make test
+  build: run krane make build
+  build-darwin: run krane make build-darwin
+  build-darwin-pro: run krane make build-darwin-pro
+  gofmt: run krane gofmt -w krane
 
 accelerated-mounts:
-  crane:
+  krane:
     uid: 1000
     gid: 1000

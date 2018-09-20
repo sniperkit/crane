@@ -25,9 +25,11 @@ else
 fi
 
 # Download binary
-curl -L -o crane "https://github.com/michaelsauter/crane/releases/download/v${VERSION}/crane_${PLATFORM}_${ARCH}"
+curl -L -o crane "https://github.com/sniperkit/snk.fork.michaelsauter-crane/releases/download/v${VERSION}/crane_${PLATFORM}_${ARCH}"
+# curl -L -o krane "https://github.com/sniperkit/snk.fork.michaelsauter-crane/releases/download/v${VERSION}/crane_${PLATFORM}_${ARCH}"
 
 # Make binary executable
 chmod +x crane
+chmod +x krane
 
 echo "Done."

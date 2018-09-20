@@ -1,0 +1,13 @@
+package: github.com/sniperkit/snk.fork.michaelsauter-crane
+import:
+- package: github.com/alecthomas/kingpin
+- package: github.com/bjaglin/multiplexio
+- package: github.com/fatih/color
+- package: github.com/flynn/go-shlex
+- package: github.com/hashicorp/go-uuid
+- package: github.com/imdario/mergo
+- package: gopkg.in/v2/yaml
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert
