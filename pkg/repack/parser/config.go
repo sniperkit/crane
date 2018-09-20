@@ -40,7 +40,8 @@ type OutputRules struct {
 }
 
 type Config struct {
-	Pkgs map[string]SrcPkg `yaml:"packages" json:"packages" toml:"packages" ini:"packages"`
+	RootCmds map[string]string `yaml:"root-cmds" json:"root-cmds" toml:"root-cmds" ini:"root-cmds"`
+	Pkgs     map[string]SrcPkg `yaml:"packages" json:"packages" toml:"packages" ini:"packages"`
 }
 
 func LoadConfigor(configPaths ...string) (Config, error) {

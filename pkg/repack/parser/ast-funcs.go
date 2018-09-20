@@ -2,11 +2,13 @@ package parser
 
 import (
 	"fmt"
+
 	"go/ast"
 	"go/build"
 	"go/parser"
 	"go/printer"
 	"go/token"
+
 	"io/ioutil"
 	"os"
 	"path"
@@ -23,10 +25,18 @@ import (
 )
 
 const (
-	amalgomatedPackage = "amalgomated"
-	amalgomatedMain    = "AmalgomatedMain"
-	internalDir        = "internal"
+	repackedPackage = "repacked"
+	repackedMain    = "RepackedMain"
+	internalDir     = "internal"
 )
+
+// Check if any other projects aim to repack an existing project
+// How to harmonize or validate that 2 vendor version will be compatible in the program ?! (Aklready seen such tool in previous search...)
+
+// Hints:
+// - lint,linters ?!
+// - apklint
+// - pkgbuild golang
 
 // repackage repackages the main package specified in the provided configuration and re-writes them into the provided
 // output directory. The repackaged files are placed into a directory called "vendor" that is created in the provided
@@ -89,6 +99,10 @@ func repackage(config Config, outputDir string) error {
 			return errors.Wrapf(err, "failed to stat %s", projectDstDir)
 		}
 
+		// TODO:
+		// Level: Important !!!
+		// use dep (Gopkg)
+		// check how fgen or flogo-cli is processing that
 		projectDstDirImport, err := build.ImportDir(projectDstDir, build.FindOnly)
 		if err != nil {
 			return errors.Wrapf(err, "unable to import project destination directory %s", projectDstDir)
@@ -97,11 +111,16 @@ func repackage(config Config, outputDir string) error {
 
 		// rewrite imports for all files in copied directory
 		fileSet := token.NewFileSet()
+
+		// NB. recursive search for bot assistant ?!
 		foundMain := false
 		goFiles := make(map[string]*ast.File)
 
+		// See above
 		flagPkgImported := false
 		if err := filepath.Walk(projectDstDir, func(currPath string, currInfo os.FileInfo, err error) error {
+
+			// Add more filters
 			if !currInfo.IsDir() && strings.HasSuffix(currInfo.Name(), ".go") {
 				fileNode, err := parser.ParseFile(fileSet, currPath, nil, parser.ParseComments)
 				if err != nil {
@@ -134,12 +153,12 @@ func repackage(config Config, outputDir string) error {
 
 				// change package name for main packages
 				if fileNode.Name.Name == "main" {
-					fileNode.Name = ast.NewIdent(amalgomatedPackage)
+					fileNode.Name = ast.NewIdent(repackedPackage)
 
 					// find the main function
 					mainFunc := findFunction(fileNode, "main")
 					if mainFunc != nil {
-						err = renameFunction(fileNode, "main", amalgomatedMain)
+						err = renameFunction(fileNode, "main", repackedMain)
 						if err != nil {
 							return errors.Wrapf(err, "failed to rename function in file %s", currPath)
 						}
@@ -363,7 +382,7 @@ func createMapLiteralEntries(pkgs map[string]SrcPkg) []ast.Expr {
 	return entries
 }
 
-// createMapKeyValueExpression creates a new map key value function expression of the form "{{name}}": func() { {{namedImport}}.{{amalgomatedMain}}() }.
+// createMapKeyValueExpression creates a new map key value function expression of the form "{{name}}": func() { {{namedImport}}.{{repackedMain}}() }.
 // In most cases "name" and "namedImport" will be the same, but if multiple commands refer to the same package, then the
 // commands that are lexicographically later should refer to the named import of the first command.
 func createMapKeyValueExpression(name, namedImport string) *ast.KeyValueExpr {
@@ -382,7 +401,7 @@ func createMapKeyValueExpression(name, namedImport string) *ast.KeyValueExpr {
 						X: &ast.CallExpr{
 							Fun: &ast.SelectorExpr{
 								X:   ast.NewIdent(namedImport),
-								Sel: ast.NewIdent(amalgomatedMain),
+								Sel: ast.NewIdent(repackedMain),
 							},
 						},
 					},
