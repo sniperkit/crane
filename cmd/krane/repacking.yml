@@ -1,1 +1,18 @@
 ---
+packages:
+  crane:
+    main: github.com/sniperkit/snk.fork.michaelsauter-crane/cmd/crane
+    distance-to-project-pkg: 2
+    omit-vendor-dirs: true
+  flogo:
+    main: github.com/TIBCOSoftware/flogo-cli/cmd/flogo
+    distance-to-project-pkg: 2
+    omit-vendor-dirs: true
+  fgen:
+    main: github.com/retgits/fgen
+    omit-vendor-dirs: true
+    distance-to-project-pkg: 0
+  fweb:
+    main: github.com/retgits/flogowebhelper
+    omit-vendor-dirs: true
+    distance-to-project-pkg: 0
