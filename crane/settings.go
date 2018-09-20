@@ -1,15 +1,21 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package crane
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	uuid "github.com/hashicorp/go-uuid"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
 	"time"
+
+	uuid "github.com/hashicorp/go-uuid"
 )
 
 var settings *Settings

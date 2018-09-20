@@ -1,6 +1,13 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package crane
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type NetworkParameters struct {
 	RawAlias       interface{} `json:"alias" yaml:"alias"`

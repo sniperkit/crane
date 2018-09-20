@@ -1,8 +1,15 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // +build !pro
 
 package crane
 
-import "runtime"
+import (
+	"runtime"
+)
 
 type AcceleratedMount interface {
 	Run()

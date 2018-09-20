@@ -1,16 +1,22 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package crane
 
 import (
 	"bytes"
 	"fmt"
-	"github.com/bjaglin/multiplexio"
-	ansi "github.com/fatih/color"
 	"io"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"text/tabwriter"
+
+	"github.com/bjaglin/multiplexio"
+	ansi "github.com/fatih/color"
 )
 
 type Containers []Container

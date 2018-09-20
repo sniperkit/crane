@@ -1,3 +1,6 @@
+# Sniperkit-Bot
+# - Status: analyzed
+
 services:
   crane:
     image: michaelsauter/golang:1.8
@@ -5,7 +8,7 @@ services:
     interactive: true
     tty: true
     volume: ["$GOPATH:/go"]
-    workdir: /go/src/github.com/michaelsauter/crane
+    workdir: /go/src/github.com/sniperkit/snk.fork.michaelsauter-crane
     share-ssh-socket: true
     cmd: ["bash"]
 

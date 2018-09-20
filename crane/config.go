@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package crane
 
 import (
@@ -5,8 +10,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/imdario/mergo"
-	"gopkg.in/v2/yaml"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -14,6 +17,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/imdario/mergo"
+	"gopkg.in/v2/yaml"
 )
 
 type Config interface {
