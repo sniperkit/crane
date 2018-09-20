@@ -1,9 +1,9 @@
-`amalgomate` provides a mechanism that solves this problem elegantly in a novel and automated way. It provides the
+`repackr` provides a mechanism that solves this problem elegantly in a novel and automated way. It provides the
 capability of *programmatically generating a set of source files that can be compiled safely into a single program* and
 a *mechanism for invoking the sub-programs from the main program safely*.
 
 ## Programmatic library source generation
-As input, `amalgomate` takes a configuration file that specifies the paths to the `main` packages for the programs to be
+As input, `repackr` takes a configuration file that specifies the paths to the `main` packages for the programs to be
 combined. Here is an example:
 
 ```yml
@@ -28,12 +28,12 @@ packages:
     main: github.com/opennota/check/cmd/varcheck
 ```
 
-When `amalgomate` is run, it does the following:
+When `repackr` is run, it does the following:
 
 * Finds all of the source for the package based on its import path
 * Copies the source to an internal directory within the project
 * Programmatically re-writes the "main" package into a library package called `amalgomated` and re-writes the `main`
-  function to be `AmalgomatedMain` so that it is exported and callable
+  function to be `RepackedMain` so that it is exported and callable
 * Finds any imported instances of packages that are known to store shared global state initialized on package load (such
   as the Go built-in `flag` package), creates a copy of those libraries for the re-written program and updates the
   imports of the program to use the copied library
