@@ -59,7 +59,7 @@ func handleRecoveredError(recovered interface{}) {
 
 var requiredDockerVersion = []int{1, 13}
 
-func RealMain() {
+func Start() {
 	// On panic, recover the error, display it and return the given status code if any
 	defer func() {
 		handleRecoveredError(recover())
