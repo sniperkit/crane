@@ -1,5 +1,5 @@
-hash: d567fcb51a2004c18b0fa543d4fa5b487b35433ee8bbdcd75277740157029726
-updated: 2018-09-20T03:23:02.128534188+02:00
+hash: 7f8c45beb6df31e09711a8edafaddf81b48f510ba3f0d49da9b1cf184afcbc13
+updated: 2018-09-20T05:02:50.530209054+02:00
 imports:
 - name: github.com/alecthomas/kingpin
   version: a39589180ebd6bbf43076e514b55f20a95d43086
@@ -9,8 +9,14 @@ imports:
   - parse
 - name: github.com/alecthomas/units
   version: 2efee857e7cfd4f3d0138cc3cbb1b4966962b93a
+- name: github.com/bitly/go-simplejson
+  version: 0c965951289cce37dec52ad1f34200fefc816777
 - name: github.com/bjaglin/multiplexio
   version: 7477705f395a7cc682ae2453b04377e9f4984779
+- name: github.com/codegangsta/cli
+  version: 934abfb2f102315b5794e15ebc7949e4ca253920
+- name: github.com/docker/go-units
+  version: 47565b4f722fb6ceae66b95f853feed578a4a51c
 - name: github.com/fatih/color
   version: 2d684516a8861da43017284349b7e303e809ac21
 - name: github.com/flynn/go-shlex
@@ -19,15 +25,47 @@ imports:
   version: de160f5c59f693fed329e73e291bb751fe4ea4dc
 - name: github.com/imdario/mergo
   version: 9f23e2d6bd2a77f959b2bf6acdbefd708a83a4a4
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/kardianos/osext
+  version: ae77be60afb1dcacde03767a8c37337fad28ac14
 - name: github.com/mattn/go-colorable
   version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
 - name: github.com/mattn/go-isatty
   version: 3fb116b820352b7f0c281308a4d6250c22d94e27
+- name: github.com/nmiyake/pkg
+  version: b64318170fdef93b4462420e0badef8050dbb7ec
+  subpackages:
+  - dirs
+  - errorstringer
+  - gofiles
+- name: github.com/palantir/pkg
+  version: e950b14bf198989436761c143f1c97d2f99f7f6f
+  subpackages:
+  - cobracli
+- name: github.com/pkg/errors
+  version: c059e472caf75dbe73903f6521a20abac245b17f
+- name: github.com/satori/go.uuid
+  version: 36e9d2ebbde5e3f13ab2e25625fd453271d6522e
+- name: github.com/spf13/cobra
+  version: 8d114be902bc9f08717804830a55c48378108a28
+- name: github.com/spf13/jwalterweatherman
+  version: 4a4406e478ca629068e7768fc33f3f044173c0a6
+- name: github.com/spf13/pflag
+  version: 298182f68c66c05229eb03ac171abe6e309ee79a
+- name: github.com/termie/go-shutil
+  version: bcacb06fecaeec8dc42af03c87c6949f4a05c74c
 - name: golang.org/x/sys
   version: 1561086e645b2809fb9f8a1e2a38160bf8d53bf4
   subpackages:
   - unix
+- name: golang.org/x/tools
+  version: 90fa682c2a6e6a37b3a1364ce2fe1d5e41af9d6d
+  subpackages:
+  - go/ast/astutil
 - name: gopkg.in/v2/yaml
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
+- name: gopkg.in/yaml.v2
   version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
 testImports:
 - name: github.com/davecgh/go-spew
@@ -42,3 +80,4 @@ testImports:
   version: f35b8ab0b5a2cef36673838d662e249dd9c94686
   subpackages:
   - assert
+  - require

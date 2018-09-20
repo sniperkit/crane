@@ -12,7 +12,7 @@ import (
 	"github.com/satori/go.uuid"
 
 	// internal
-	squash "github.com/sniperkit/snk.fork.michaelsauter-crane/plugin/internal/squash/v1"
+	squash "github.com/sniperkit/snk.fork.michaelsauter-crane/plugin/squash/v1"
 )
 
 func main() {

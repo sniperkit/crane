@@ -1,5 +1,4 @@
-// +build !pro
-
+// +build basic
 package core
 
 import (

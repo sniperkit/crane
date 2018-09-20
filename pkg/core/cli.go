@@ -515,7 +515,10 @@ func runCli() {
 		container := cfg.Container(*amResetTargetArg)
 		if container != nil {
 			for _, bm := range container.BindMounts(cfg.VolumeNames()) {
-				am := &acceleratedMount{RawVolume: bm, configPath: cfg.Path()}
+				am := &acceleratedMount{
+					RawVolume:  bm,
+					configPath: cfg.Path(),
+				}
 				resetTargets = append(resetTargets, am.Volume())
 			}
 		} else {
@@ -550,7 +553,10 @@ func runCli() {
 					acceleratedBindMounts = append(acceleratedBindMounts, name)
 				}
 			}
-			am := &acceleratedMount{RawVolume: acceleratedBindMounts[0], configPath: cfg.Path()}
+			am := &acceleratedMount{
+				RawVolume:  acceleratedBindMounts[0],
+				configPath: cfg.Path(),
+			}
 			logsTarget = am.Volume()
 			if len(acceleratedBindMounts) > 1 {
 				printNoticef("WARNING: %s has more than one bind-mount configured. The first one will be selected. To select a different bind-mount, pass it directly.\n", *amLogsTargetArg)

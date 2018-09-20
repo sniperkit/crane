@@ -8,7 +8,7 @@ import (
 	jww "github.com/spf13/jwalterweatherman"
 
 	// internal
-	squash "github.com/sniperkit/snk.fork.michaelsauter-crane/plugin/internal/squash/v2"
+	squash "github.com/sniperkit/snk.fork.michaelsauter-crane/plugin/squash/v2"
 )
 
 func main() {
